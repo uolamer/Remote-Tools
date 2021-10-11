@@ -45,9 +45,9 @@ function Stop-RemoteService {
 	
 	# Output based on if Force was specified.
 	if($Force){
-		if (!$Quiet){Write-Output "Stopping ""$ServiceName on ""$ComputerName"". PID ""$($Service.ProcessId)"". (forced after $TimeOut seconds)"}
+		if (!$Quiet){Write-Host "Stopping ""$ServiceName on ""$ComputerName"". PID ""$($Service.ProcessId)"". (forced after $TimeOut seconds)"}
 	} else {
-		if (!$Quiet){Write-Output "Stopping ""$ServiceName"" on ""$ComputerName"" PID ""$($Service.ProcessId)""."}
+		if (!$Quiet){Write-Host "Stopping ""$ServiceName"" on ""$ComputerName"" PID ""$($Service.ProcessId)""."}
 	}
     
 	# Send stop service command to remote server.
@@ -63,7 +63,7 @@ function Stop-RemoteService {
 		}
 		Write-Progress -Activity $Activity -Completed
 	} elseif($TimeOut) {
-		if (!$Quiet){Write-Output "Waiting up to ""$TimeOut"" seconds for service to stop..." }
+		if (!$Quiet){Write-Host "Waiting up to ""$TimeOut"" seconds for service to stop..." }
 		while ($TimeOut -and (Get-RemoteService $ComputerName $ServiceName).ProcessId) {
 			Start-Sleep -Seconds 1
 			$TimeOut -= 1
@@ -85,7 +85,7 @@ function Stop-RemoteService {
 	} elseif($Service.State -ne 'Stopped'){
 		Write-Warning "Service ""$ServiceName"": ""$($Service.State)""."
 	} else {
-		if (!$Quiet){Write-Output "Service ""$ServiceName"": ""$($Service.State)""." }
+		if (!$Quiet){Write-Host "Service ""$ServiceName"": ""$($Service.State)""." }
 	}
 	return $Service
 }

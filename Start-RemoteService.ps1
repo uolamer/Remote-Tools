@@ -36,7 +36,7 @@ function Start-RemoteService {
 	}
 	
 	# Send start service command to remote server.
-	if (!$Quiet){Write-Output "Attempting to Start ""$ServiceName"" on ""$ComputerName""." }
+	if (!$Quiet){Write-Host "Attempting to Start ""$ServiceName"" on ""$ComputerName""." }
 	$null = $Service.startservice()
 
 
@@ -49,7 +49,7 @@ function Start-RemoteService {
 		}
 		Write-Progress -Activity $Activity -Completed
 	} elseif($TimeOut) {
-		if (!$Quiet){Write-Output "Waiting up to ""$TimeOut"" seconds for ""$ServiceName"" to start on ""$ComputerName""..." }
+		if (!$Quiet){Write-Host "Waiting up to ""$TimeOut"" seconds for ""$ServiceName"" to start on ""$ComputerName""..." }
 		for($i = 0; $i -lt $TimeOut -and (Get-RemoteService $ComputerName $ServiceName).State -ne 'Running'; $i += 1){
 			Start-Sleep -Seconds 1
 		}
@@ -62,9 +62,9 @@ function Start-RemoteService {
 	if ($Service.State -eq 'Start Pending') {
 		# Decided that if you choose 0 timeout this is less of a warning as it happens often
 		if ($timeout) {Write-Warning "Service ""$ServiceName"": ""$($Service.State)""."}
-		elseif (!$Quiet){ Write-Output "Service ""$ServiceName"": ""$($Service.State)""." }
+		elseif (!$Quiet){ Write-Host "Service ""$ServiceName"": ""$($Service.State)""." }
 	} elseif ($Service.State -eq 'Running'){
-		if (!$Quiet){ Write-Output "Service ""$ServiceName"": ""$($Service.State)""." }	
+		if (!$Quiet){ Write-Host "Service ""$ServiceName"": ""$($Service.State)""." }	
 	} else {
 		Write-Error "Service ""$ServiceName"": ""$($Service.State)""."
 	}

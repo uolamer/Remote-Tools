@@ -45,7 +45,7 @@ function Start-Timeout {
 		}
 	Write-Progress -Activity $Activity -Completed
 	} elseif ($Timeout) {
-		if (!$Quiet) { Write-Output "Waiting for $Timeout seconds, press q to continue ..." }
+		if (!$Quiet) { Write-Host "Waiting for $Timeout seconds, press q to continue ..." }
 		[int]$Timeout *= 1000
 		while ($Timeout) {
 			if ([Console]::KeyAvailable) {
