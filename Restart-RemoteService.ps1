@@ -23,6 +23,8 @@ function Restart-RemoteService {
 		[ValidateRange(0, 900)][Parameter(Position = 3)][int]$TimeOutStop = 60,
 		# Seconds (0-900) to wait for process to start in seconds. Defaults to 60 if not specified.
 		[ValidateRange(0, 900)][Parameter(Position = 4)][int]$TimeOutStart = 60,
+		# Option to show a progress bar while waiting before start
+		[Parameter()][switch]$WaitProgressBar,
 		# Option to show a progress bar while waiting to stop
 		[Parameter()][switch]$StartProgressBar,
 		# Option to show a progress bar while waiting to start
@@ -56,6 +58,8 @@ function Restart-RemoteService {
 		Start-Sleep $Wait
 	} elseif ($Wait -and $Quiet) {
 		Start-Timeout -Timeout $Wait -Quiet
+	} elseif ($Wait -and $WaitProgressBar) {
+		Start-Timeout -Timeout $Wait -ProgressBar
 	} elseif ($Wait) {
 		Start-Timeout -Timeout $Wait
 	}
